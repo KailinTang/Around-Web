@@ -1,15 +1,15 @@
 import React from 'react';
-import $ from 'jquery';
 import {Form, Input, Button, message} from 'antd';
-import {API_ROOT} from '../constants';
+import $ from 'jquery';
+import {API_ROOT} from '../constants.js';
+import {Link} from 'react-router-dom';
 
 const FormItem = Form.Item;
 
 class RegistrationForm extends React.Component {
     state = {
-        confirmDirty: false,
-        autoCompleteResult: [],
-    };
+        confirmDirty: false
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -20,13 +20,14 @@ class RegistrationForm extends React.Component {
                     method: 'POST',
                     data: JSON.stringify({
                         username: values.username,
-                        password: values.password,
-                    }),
-                }).then(function (response) {
+                        password: values.password
+                    })
+                }).then((response) => {
                     message.success(response);
-                }, function (response) {
-                    message.error(response.responseText);
-                }).catch(function (error) {
+                    this.props.history.push("/login");
+                }, (error) => {
+                    message.error(error.responseText);
+                }).catch((error) => {
                     message.error(error);
                 });
             }
@@ -57,11 +58,11 @@ class RegistrationForm extends React.Component {
         const formItemLayout = {
             labelCol: {
                 xs: {span: 24},
-                sm: {span: 8},
+                sm: {span: 6},
             },
             wrapperCol: {
                 xs: {span: 24},
-                sm: {span: 16},
+                sm: {span: 14},
             },
         };
         const tailFormItemLayout = {
@@ -71,8 +72,8 @@ class RegistrationForm extends React.Component {
                     offset: 0,
                 },
                 sm: {
-                    span: 16,
-                    offset: 8,
+                    span: 14,
+                    offset: 6,
                 },
             },
         };
@@ -81,6 +82,7 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Username"
+                    hasFeedback
                 >
                     {getFieldDecorator('username', {
                         rules: [{required: true, message: 'Please input your username!', whitespace: true}],
@@ -91,6 +93,7 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Password"
+                    hasFeedback
                 >
                     {getFieldDecorator('password', {
                         rules: [{
@@ -105,6 +108,7 @@ class RegistrationForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Confirm Password"
+                    hasFeedback
                 >
                     {getFieldDecorator('confirm', {
                         rules: [{
@@ -118,6 +122,7 @@ class RegistrationForm extends React.Component {
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">Register</Button>
+                    <p>I already have account, go back to <Link to="/login">login</Link></p>
                 </FormItem>
             </Form>
         );
