@@ -1,6 +1,7 @@
 import React from 'react';
+import $ from 'jquery';
 import {Tabs, Button, Spin} from 'antd';
-import {GEO_OPTIONS} from '../constants'
+import {GEO_OPTIONS, POS_KEY, API_ROOT, AUTH_PREFIX, TOKEN_KEY} from '../constants'
 
 const TabPane = Tabs.TabPane;
 const operations = <Button>Extra Action</Button>
@@ -9,6 +10,7 @@ export class Home extends React.Component {
     state = {
         loadingGeoLocation: false,
         error: '',
+        loadingPost: false,
     }
 
     componentDidMount() {
@@ -30,10 +32,33 @@ export class Home extends React.Component {
 
     onSuccessLoadGeoLocation = (position) => {
         this.setState({loadingGeoLocation: false, error: ''});
+        const {latitude, longitude} = position.coords;
+        localStorage.setItem(POS_KEY, JSON.stringify({lat: latitude, lon: longitude}));
+        this.loadNearbyPosts();
     }
 
     onFailLoadGeoLocation = () => {
         this.setState({loadingGeoLocation: false, error: 'Failed to load geolocation!'});
+    }
+
+    loadNearbyPosts = () => {
+        //const {lat, lon} = JSON.parse(localStorage.getItem(POS_KEY));
+        const lat = 37.7915953;
+        const lon = -122.3937977;
+        this.setState({loadingPost: true});
+        $.ajax({
+            url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
+            method: 'GET',
+            headers: {
+                Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`
+            }
+        }).then((response) => {
+            this.state({loadingPost: false, error: ''});
+        }, (error) => {
+            this.state({loadingPost: false, error: error.responseText});
+        }).catch((error) => {
+
+        })
     }
 
     getGalleryPanelContent = () => {
@@ -41,6 +66,8 @@ export class Home extends React.Component {
             return <div>{this.state.error}</div>;
         } else if (this.state.loadingGeoLocation) {
             return <Spin tip='Loading geolocation...'/>
+        } else if (this.state.loadingPost) {
+            return <Spin tip='Loading posts...'/>
         } else {
             return null;
         }
