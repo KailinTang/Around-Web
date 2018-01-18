@@ -1,6 +1,7 @@
-import React, { Component }from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import GridGallery from 'react-grid-gallery';
+
 export class Gallery extends Component {
     static propTypes = {
         images: PropTypes.arrayOf(
@@ -15,6 +16,7 @@ export class Gallery extends Component {
             })
         ).isRequired
     }
+
     render() {
         const images = this.props.images.map((image) => {
             return {
@@ -36,6 +38,7 @@ export class Gallery extends Component {
         );
     }
 }
+
 const wrapperStyle = {
     display: "block",
     minHeight: "1px",
