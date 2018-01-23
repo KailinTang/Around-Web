@@ -1,8 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
-import { Form, Input, Button, message } from 'antd';
-import { API_ROOT } from '../constants';
-import { Link } from 'react-router-dom';
+import {Form, Input, Button, message} from 'antd';
+import {API_ROOT} from '../constants';
+import {Link} from 'react-router-dom';
 
 const FormItem = Form.Item;
 
@@ -38,7 +38,7 @@ class RegistrationForm extends React.Component {
 
     handleConfirmBlur = (e) => {
         const value = e.target.value;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+        this.setState({confirmDirty: this.state.confirmDirty || !!value});
     }
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
@@ -51,22 +51,22 @@ class RegistrationForm extends React.Component {
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
+            form.validateFields(['confirm'], {force: true});
         }
         callback();
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const {getFieldDecorator} = this.props.form;
 
         const formItemLayout = {
             labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
+                xs: {span: 24},
+                sm: {span: 8},
             },
             wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
+                xs: {span: 24},
+                sm: {span: 16},
             },
         };
         const tailFormItemLayout = {
@@ -89,9 +89,9 @@ class RegistrationForm extends React.Component {
                     label="Username"
                 >
                     {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!', whitespace: true }],
+                        rules: [{required: true, message: 'Please input your username!', whitespace: true}],
                     })(
-                        <Input />
+                        <Input/>
                     )}
                 </FormItem>
                 <FormItem
@@ -105,7 +105,7 @@ class RegistrationForm extends React.Component {
                             validator: this.checkConfirm,
                         }],
                     })(
-                        <Input type="password" />
+                        <Input type="password"/>
                     )}
                 </FormItem>
                 <FormItem
@@ -119,7 +119,7 @@ class RegistrationForm extends React.Component {
                             validator: this.checkPassword,
                         }],
                     })(
-                        <Input type="password" onBlur={this.handleConfirmBlur} />
+                        <Input type="password" onBlur={this.handleConfirmBlur}/>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
