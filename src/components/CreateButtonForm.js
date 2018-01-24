@@ -67,3 +67,5 @@ class CreatePostForm extends React.Component {
 
 export const WrappedCreatePostForm = Form.create()(CreatePostForm);
 
+
+
