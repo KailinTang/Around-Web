@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import { Header } from './Header';
-import { Main } from './Main';
-import { TOKEN_KEY } from '../constants';
+import React, {Component} from 'react';
+import {Header} from './Header';
+import {Main} from './Main';
+import {TOKEN_KEY} from '../constants';
 import '../styles/App.css';
 
 class App extends Component {
     state = {
-        isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
+        isLoggedIn: Boolean(localStorage.getItem(TOKEN_KEY)),
     }
+
     handleLogin = (token) => {
-        this.setState({ isLoggedIn: true });
         localStorage.setItem(TOKEN_KEY, token);
+        this.setState({isLoggedIn: true});
     }
+
     handleLogout = () => {
-        this.setState({ isLoggedIn: false });
         localStorage.removeItem(TOKEN_KEY);
+        this.setState({isLoggedIn: false});
     }
+
     render() {
         return (
             <div className="App">
@@ -25,4 +28,5 @@ class App extends Component {
         );
     }
 }
+
 export default App;
