@@ -28,6 +28,7 @@ export class Gallery extends Component {
                 ),
             };
         });
+
         return (
             <div style={wrapperStyle}>
                 <GridGallery
@@ -39,6 +40,7 @@ export class Gallery extends Component {
     }
 }
 
+
 const wrapperStyle = {
     display: "block",
     minHeight: "1px",
@@ -46,6 +48,7 @@ const wrapperStyle = {
     border: "1px solid #ddd",
     overflow: "auto"
 };
+
 const captionStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.8)",
     maxHeight: "240px",
